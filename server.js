@@ -43,17 +43,17 @@ app.get('/api/notes', (req, res) => {
 app.post('/api/notes', (req, res) => {
     const { title, text } = req.body;
       if (title && text) {
-        const note = {
+        const notes = {
             title,
             text,
             id: uuid()
         };
         
-      readAndAppend(note, './db/db.json');
+      readAndAppend(notes, './db/db.json');
   
       const response = {
         status: 'success',
-        body: note,
+        body: notes,
       };
   
       res.json(response);
