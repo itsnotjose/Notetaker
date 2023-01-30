@@ -1,29 +1,26 @@
 //* requiring needed packages
 
 const express = require( "express" );
-//const fs = require( "fs" );
 const path = require( "path" );
 const app = express();
-var uuid = require( "uuid.v4" );
 // Helper method for generating unique id
-//* creating port in 3001
+var uuid = require( "uuid.v4" );
 
+//* creating port in 3001
 const PORT = process.env.PORT || 3001;
 const { notes } = require( "./db/db.json" ); 
-//TODO need to create app.use for public
-//TODO need to add middleware
+
+//* middleware
 app.use( express.json() );
 app.use( express.urlencoded( { extended: true } ) );
 app.use( express.static( "public" ) );
 
-//TODO GET /api/notes should read the db.json file and return all saved notes as JSON.
+//* GET /api/notes should read the db.json file and return all saved notes as JSON.
 app.get( "/api/notes", ( req, res ) => {
 	res.json( notes );
 } );
-//TODO POST /api/notes should receive a new note to save on the request body, add it to the db.json file, and then return the new note to the client. You'll need to find a way to give each note a unique id when it's saved (look into npm packages that could do this for you).
-//* allows each note to have a unique id when it's saved
+//* POST /api/notes should receive a new note to save on the request body, add it to the db.json file, and then return the new note to the client. 
 
-        
 app.post( "/api/notes", ( req, res ) => {
 
 	const { title, text } = req.body;
@@ -31,6 +28,7 @@ app.post( "/api/notes", ( req, res ) => {
 		const newNote = {
 			title,
 			text,
+			//* allows each note to have a unique id when it's saved
 			id: uuid(),
     
 		};
