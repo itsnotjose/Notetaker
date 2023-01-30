@@ -9,21 +9,12 @@ var uuid = require( "uuid.v4" );
 //* creating port in 3001
 
 const PORT = process.env.PORT || 3001;
-const { notes } = require( "./Develop/db/db.json" ); 
+const { notes } = require( "./db/db.json" ); 
 //TODO need to create app.use for public
 //TODO need to add middleware
 app.use( express.json() );
 app.use( express.urlencoded( { extended: true } ) );
 app.use( express.static( "public" ) );
-
-//* GET /notes should return the notes.html file.
-app.get ( "/notes", ( req, res ) => {
-	res.sendFile( path.join( __dirname,"./Develop/public/notes.html" ) );
-} );
-
-app.get ( "*", ( req, res ) => {
-	res.sendFile( path.join( __dirname,"./develop/public/index.html" ) );
-} );
 
 //TODO GET /api/notes should read the db.json file and return all saved notes as JSON.
 app.get( "/api/notes", ( req, res ) => {
@@ -34,6 +25,7 @@ app.get( "/api/notes", ( req, res ) => {
 
         
 app.post( "/api/notes", ( req, res ) => {
+
 	const { title, text } = req.body;
 	if ( req.body ) {
 		const newNote = {
@@ -51,6 +43,16 @@ app.post( "/api/notes", ( req, res ) => {
 	}
     
 } );
+
+//* GET /notes should return the notes.html file.
+app.get ( "/notes", ( req, res ) => {
+	res.sendFile( path.join( __dirname,"./public/notes.html" ) );
+} );
+
+app.get ( "*", ( req, res ) => {
+	res.sendFile( path.join( __dirname,"./public/index.html" ) );
+} );
+
 
 
 //* starting server in PORT 3001
